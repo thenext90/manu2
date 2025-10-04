@@ -1,37 +1,79 @@
 {
   "metadata": {
     "title": "ISOTools - Noticias Diarias",
-    "description": "Seleccion diaria de 3 articulos destacados sobre normas ISO",
+    "description": "Selección diaria de 3 artículos destacados sobre normas ISO",
     "source": "ISOTools Corporate Blog (isotools.us)",
     "generated_date": "2025-10-04",
-    "generated_at": "2025-10-04T15:17:00.160Z",
+    "generated_at": "2025-10-04T12:54:44.757218",
     "next_update": "2025-10-05",
     "total_articles": 3,
     "rotation_type": "daily_random_selection",
     "version": "1.0.0",
-    "purpose": "Noticias diarias para seccion web",
-    "github_raw_example": "https://raw.githubusercontent.com/thenext90/manu2/main/isotools-daily-news.json",
+    "purpose": "Noticias diarias para sección web",
+    "github_raw_example": "https://raw.githubusercontent.com/tu-usuario/tu-repo/main/isotools-daily-news.json",
     "parent_source": "ISOTools Corporate Blog (isotools.us)",
-    "language": "espanol"
+    "language": "español"
   },
   "configuration": {
     "daily_rotation": true,
     "articles_per_day": 3,
-    "selection_method": "jq_time_based_random_selection",
+    "selection_method": "true_random_with_timestamp",
     "auto_update": true,
     "github_action_enabled": true,
     "cache_duration_hours": 24,
     "rotation_on_each_execution": true
   },
   "daily_news": [
-    null,
-    null,
-    null
+    {
+      "id": 13,
+      "title": "Auditorías internas ISO: metodología avanzada para el control de calidad empresarial",
+      "url": "https://www.isotools.us/2025/07/30/auditorias-internas-iso-metodologia-avanzada-para-el-control-de-calidad-empresarial/",
+      "ai_summary": "Las auditorías internas efectivas fortalecen los sistemas de gestión de calidad y aseguran el cumplimiento continuo de requisitos normativos. Su implementación sistemática identifica oportunidades de mejora, previene no conformidades y optimiza procesos organizacionales. Las empresas con programas de auditoría robustos mantienen certificaciones vigentes y demuestran compromiso con la excelencia operativa.",
+      "summary_length": 408,
+      "category": "ISO_42001_Inteligencia_Artificial",
+      "ai_generated": true,
+      "page_found": 4,
+      "extracted_at": "2025-10-04T10:54:37.097Z",
+      "processed_at": "2025-10-04T10:54:43.316Z",
+      "news_priority": 1,
+      "selected_date": "2025-10-04T12:54:44.757008",
+      "rotation_id": "2025-10-04-1"
+    },
+    {
+      "id": 15,
+      "title": "Compliance normativo: estrategias para el cumplimiento de múltiples estándares ISO",
+      "url": "https://www.isotools.us/2025/07/20/compliance-normativo-estrategias-para-el-cumplimiento-de-multiples-estandares-iso/",
+      "ai_summary": "Esta implementación normativa fortalece los sistemas de gestión organizacional, mejorando la eficiencia operativa y el cumplimiento de estándares internacionales. Su adopción genera ventajas competitivas sostenibles, optimiza procesos críticos y demuestra compromiso con la excelencia empresarial. Las organizaciones implementadoras experimentan mayor productividad, reducción de costos y mejor posicionamiento en mercados exigentes.",
+      "summary_length": 433,
+      "category": "ISO_42001_Inteligencia_Artificial",
+      "ai_generated": true,
+      "page_found": 5,
+      "extracted_at": "2025-10-04T10:54:37.097Z",
+      "processed_at": "2025-10-04T10:54:44.350Z",
+      "news_priority": 2,
+      "selected_date": "2025-10-04T12:54:44.757146",
+      "rotation_id": "2025-10-04-2"
+    },
+    {
+      "id": 10,
+      "title": "ISO 37001: implementación efectiva de sistemas antisoborno en organizaciones",
+      "url": "https://www.isotools.us/2025/08/15/iso-37001-implementacion-efectiva-de-sistemas-antisoborno-en-organizaciones/",
+      "ai_summary": "La norma ISO 37001 establece sistemas de gestión antisoborno que fortalecen la integridad organizacional y previenen prácticas corruptas. Su implementación mejora la reputación empresarial, facilita el acceso a mercados internacionales y reduce riesgos legales y financieros. Las organizaciones certificadas demuestran compromiso ético y transparencia en todas sus operaciones comerciales.",
+      "summary_length": 389,
+      "category": "ISO_37001_Antisoborno",
+      "ai_generated": true,
+      "page_found": 3,
+      "extracted_at": "2025-10-04T10:54:37.097Z",
+      "processed_at": "2025-10-04T10:54:41.764Z",
+      "news_priority": 3,
+      "selected_date": "2025-10-04T12:54:44.757187",
+      "rotation_id": "2025-10-04-3"
+    }
   ],
   "generation_info": {
-    "selected_at": "2025-10-04T15:17:00.160Z",
-    "next_rotation": "2025-10-05T12:00:00.000Z",
-    "algorithm": "jq_time_based_selection",
+    "selected_at": "2025-10-04T12:54:44.757218",
+    "next_rotation": "2025-10-05T12:54:44.757218",
+    "algorithm": "python_random_sample",
     "total_available_articles": 31,
     "rotation_guaranteed": true
   }

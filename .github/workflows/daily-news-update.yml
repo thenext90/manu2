@@ -26,92 +26,21 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         
-    - name: Install jq
-      run: sudo apt-get update && sudo apt-get install -y jq
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
         
     - name: Generate daily news
       run: |
-        echo "Generating 3 random articles with jq (time-based selection)..."
+        echo "🗞️ Generating daily news with Python script..."
+        python isotools-summaries-standalone/generate-daily-3-news.py
         
-        SOURCE_FILE="isotools-summaries-standalone/isotools-final-data.json"
-        OUTPUT_FILE="isotools-daily-news.json"
-        
-        if [ ! -f "$SOURCE_FILE" ]; then
-          echo "Error: $SOURCE_FILE not found"
-          exit 1
-        fi
-        
-        TODAY=$(date +'%Y-%m-%d')
-        TOMORROW=$(date -d '+1 day' +'%Y-%m-%d')
-        CURRENT_ISO=$(date -u +"%Y-%m-%dT%H:%M:%S.%3NZ")
-        
-        echo "Date: $TODAY"
-        echo "Processing: $SOURCE_FILE"
-        
-        # Use a simpler, more reliable selection method
-        SELECTED_ARTICLES=$(jq --arg seed "$TODAY" '.data | sort_by(.id + ($seed | tonumber // 0)) | .[0:3] | to_entries | map(.value + {"news_priority": (.key + 1), "selected_date": "'$CURRENT_ISO'", "rotation_id": ("'$TODAY'-" + (.key + 1 | tostring))})' "$SOURCE_FILE")
-        
-        ORIGINAL_SOURCE=$(jq -r '.metadata.source // "ISOTools Corporate Blog"' "$SOURCE_FILE")
-        TOTAL_ARTICLES=$(jq -r '.data | length' "$SOURCE_FILE")
-        
-        # Debug: Show selected articles structure
-        echo "Debug: Total articles found: $TOTAL_ARTICLES"
-        echo "Debug: Selected articles preview:"
-        echo "$SELECTED_ARTICLES" | jq '.[0:2] | map({id, title: .title[0:50]})'
-        
-        # Generate the complete JSON
-        jq -n \
-          --arg today "$TODAY" \
-          --arg tomorrow "$TOMORROW" \
-          --arg current_iso "$CURRENT_ISO" \
-          --arg original_source "$ORIGINAL_SOURCE" \
-          --arg total_articles "$TOTAL_ARTICLES" \
-          --arg repo "${{ github.repository }}" \
-          --argjson selected_articles "$SELECTED_ARTICLES" \
-          '{
-            metadata: {
-              title: "ISOTools - Noticias Diarias",
-              description: "Seleccion diaria de 3 articulos destacados sobre normas ISO",
-              source: "ISOTools Corporate Blog (isotools.us)",
-              generated_date: $today,
-              generated_at: $current_iso,
-              next_update: $tomorrow,
-              total_articles: 3,
-              rotation_type: "daily_random_selection",
-              version: "1.0.0",
-              purpose: "Noticias diarias para seccion web",
-              github_raw_example: ("https://raw.githubusercontent.com/" + $repo + "/main/isotools-daily-news.json"),
-              parent_source: $original_source,
-              language: "espanol"
-            },
-            configuration: {
-              daily_rotation: true,
-              articles_per_day: 3,
-              selection_method: "jq_date_based_selection",
-              auto_update: true,
-              github_action_enabled: true,
-              cache_duration_hours: 24,
-              rotation_on_each_execution: true
-            },
-            daily_news: $selected_articles,
-            generation_info: {
-              selected_at: $current_iso,
-              next_rotation: ($tomorrow + "T12:00:00.000Z"),
-              algorithm: "jq_date_seed_selection",
-              total_available_articles: ($total_articles | tonumber),
-              rotation_guaranteed: true
-            }
-          }' > "$OUTPUT_FILE"
-        
-        if [ -f "$OUTPUT_FILE" ]; then
-          echo "✅ File generated successfully"
-          echo "📋 Selected articles:"
-          jq -r '.daily_news[] | "\(.news_priority). \(.title[0:60])..."' "$OUTPUT_FILE"
-          echo "📊 File size: $(wc -c < "$OUTPUT_FILE") bytes"
-          cp "$OUTPUT_FILE" "isotools-summaries-standalone/"
-          echo "✅ File copied to subdirectory"
+        if [ -f "isotools-daily-news.json" ]; then
+          echo "✅ Daily news generated successfully"
+          ls -la isotools-daily-news.json
         else
-          echo "❌ Error generating file"
+          echo "❌ Error: Failed to generate daily news"
           exit 1
         fi
         
@@ -124,17 +53,22 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         
+        CURRENT_BRANCH=$(git branch --show-current)
+        echo "Current branch: $CURRENT_BRANCH"
+        
         if git diff --quiet && git diff --staged --quiet; then
           echo "No changes to commit"
         else
           git add isotools-daily-news.json
           git add isotools-summaries-standalone/isotools-daily-news.json
-          git commit -m "Daily news updated - ${{ steps.date.outputs.TODAY }} - jq/shell algorithm"
-          git push origin main
-          echo "Changes pushed successfully"
+          git commit -m "Daily news updated - ${{ steps.date.outputs.TODAY }} - Python algorithm"
+          git push origin $CURRENT_BRANCH
+          echo "Changes pushed successfully to branch: $CURRENT_BRANCH"
         fi
         
     - name: Summary
       run: |
+        CURRENT_BRANCH=$(git branch --show-current)
         echo "Update completed for ${{ steps.date.outputs.TODAY }}"
-        echo "RAW URL: https://raw.githubusercontent.com/${{ github.repository }}/main/isotools-daily-news.json"
+        echo "Current branch: $CURRENT_BRANCH"
+        echo "RAW URL: https://raw.githubusercontent.com/${{ github.repository }}/$CURRENT_BRANCH/isotools-daily-news.json"
