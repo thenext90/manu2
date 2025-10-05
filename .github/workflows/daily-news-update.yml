@@ -6,7 +6,7 @@ permissions:
 
 on:
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '0 7 * * *'  # Ejecutar todos los días a las 7:00 AM UTC
   workflow_dispatch:
     inputs:
       force_update:
@@ -87,5 +87,6 @@ jobs:
       run: |
         echo "✅ Update completed for ${{ steps.date.outputs.TODAY }}"
         echo "🌿 Branch: isotools-news-only (exclusive)"
+        echo "⏰ Next update: Tomorrow at 7:00 AM UTC"
         echo "🌐 RAW URL: https://raw.githubusercontent.com/${{ github.repository }}/isotools-news-only/isotools-daily-news.json"
-        echo "📊 Articles updated: 3"
+        echo "📊 Articles updated: 3 with unique AI summaries"
