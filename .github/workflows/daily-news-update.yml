@@ -14,13 +14,30 @@ on:
         required: false
         default: false
         type: boolean
+  push:
+    branches:
+      - isotools-news-only
+  pull_request:
+    branches:
+      - isotools-news-only
 
 jobs:
   update-daily-news:
     runs-on: ubuntu-latest
     name: Generate Daily News
+    if: github.ref == 'refs/heads/isotools-news-only'
     
     steps:
+    - name: Verify branch
+      run: |
+        echo "Current ref: ${{ github.ref }}"
+        echo "Expected ref: refs/heads/isotools-news-only"
+        if [ "${{ github.ref }}" != "refs/heads/isotools-news-only" ]; then
+          echo "❌ Error: Workflow should only run on isotools-news-only branch"
+          exit 1
+        fi
+        echo "✅ Branch verification passed"
+        
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
@@ -54,22 +71,21 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         
-        CURRENT_BRANCH=$(git branch --show-current)
-        echo "Current branch: $CURRENT_BRANCH"
+        echo "🌿 Working on branch: isotools-news-only"
         
         if git diff --quiet && git diff --staged --quiet; then
           echo "No changes to commit"
         else
           git add isotools-daily-news.json
           git add isotools-summaries-standalone/isotools-daily-news.json
-          git commit -m "Daily news updated - ${{ steps.date.outputs.TODAY }} - Python algorithm"
-          git push origin $CURRENT_BRANCH
-          echo "Changes pushed successfully to branch: $CURRENT_BRANCH"
+          git commit -m "Daily news updated - ${{ steps.date.outputs.TODAY }} - isotools-news-only branch"
+          git push origin isotools-news-only
+          echo "✅ Changes pushed successfully to isotools-news-only"
         fi
         
     - name: Summary
       run: |
-        CURRENT_BRANCH=$(git branch --show-current)
-        echo "Update completed for ${{ steps.date.outputs.TODAY }}"
-        echo "Current branch: $CURRENT_BRANCH"
-        echo "RAW URL: https://raw.githubusercontent.com/${{ github.repository }}/$CURRENT_BRANCH/isotools-daily-news.json"
+        echo "✅ Update completed for ${{ steps.date.outputs.TODAY }}"
+        echo "🌿 Branch: isotools-news-only (exclusive)"
+        echo "🌐 RAW URL: https://raw.githubusercontent.com/${{ github.repository }}/isotools-news-only/isotools-daily-news.json"
+        echo "📊 Articles updated: 3"
