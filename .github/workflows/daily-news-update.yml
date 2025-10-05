@@ -51,11 +51,11 @@ jobs:
         
     - name: Generate daily news
       run: |
-        echo "🗞️ Generating daily news with Python script..."
-        python isotools-summaries-standalone/generate-daily-3-news.py
+        echo "🗞️ Generating daily news with ENHANCED Python script (unique summaries)..."
+        python isotools-summaries-standalone/generate-daily-news-unique.py
         
         if [ -f "isotools-daily-news.json" ]; then
-          echo "✅ Daily news generated successfully"
+          echo "✅ Daily news generated successfully with unique AI summaries"
           ls -la isotools-daily-news.json
         else
           echo "❌ Error: Failed to generate daily news"
@@ -78,7 +78,7 @@ jobs:
         else
           git add isotools-daily-news.json
           git add isotools-summaries-standalone/isotools-daily-news.json
-          git commit -m "Daily news updated - ${{ steps.date.outputs.TODAY }} - isotools-news-only branch"
+          git commit -m "Daily news updated - ${{ steps.date.outputs.TODAY }} - UNIQUE AI summaries only"
           git push origin isotools-news-only
           echo "✅ Changes pushed successfully to isotools-news-only"
         fi

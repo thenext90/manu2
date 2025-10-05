@@ -1,38 +1,96 @@
 {
   "metadata": {
     "title": "ISOTools - Noticias Diarias",
-    "description": "Seleccion diaria de 3 articulos destacados sobre normas ISO",
+    "description": "Selección diaria de 3 artículos destacados sobre normas ISO",
     "source": "ISOTools Corporate Blog (isotools.us)",
     "generated_date": "2025-10-04",
-    "generated_at": "2025-10-04T15:17:00.160Z",
+    "generated_at": "2025-10-04T22:12:25.991696",
     "next_update": "2025-10-05",
     "total_articles": 3,
-    "rotation_type": "daily_random_selection",
-    "version": "1.0.0",
-    "purpose": "Noticias diarias para seccion web",
-    "github_raw_example": "https://raw.githubusercontent.com/thenext90/manu2/main/isotools-daily-news.json",
+    "rotation_type": "daily_random_selection_unique_summaries",
+    "version": "2.0.0",
+    "purpose": "Noticias diarias para sección web",
+    "github_raw_example": "https://raw.githubusercontent.com/thenext90/manu2/isotools-news-only/isotools-daily-news.json",
     "parent_source": "ISOTools Corporate Blog (isotools.us)",
-    "language": "espanol"
+    "language": "español",
+    "summary_quality": {
+      "unique_summaries": 3,
+      "generic_summaries": 0,
+      "total_available_unique": 15
+    }
   },
   "configuration": {
     "daily_rotation": true,
     "articles_per_day": 3,
-    "selection_method": "jq_time_based_random_selection",
+    "selection_method": "prioritize_unique_summaries",
     "auto_update": true,
     "github_action_enabled": true,
     "cache_duration_hours": 24,
-    "rotation_on_each_execution": true
+    "rotation_on_each_execution": true,
+    "quality_filter_enabled": true,
+    "avoid_generic_summaries": true
   },
   "daily_news": [
-    null,
-    null,
-    null
+    {
+      "id": 8,
+      "title": "ISO 50001: estrategias avanzadas para optimizar la gestión energética empresarial",
+      "url": "https://www.isotools.us/2025/08/25/iso-50001-estrategias-avanzadas-para-optimizar-la-gestion-energetica-empresarial/",
+      "ai_summary": "ISO 50001 permite a las organizaciones desarrollar sistemas de gestión energética que optimizan el consumo y reducen costos operativos significativamente. Esta norma facilita la identificación de oportunidades de ahorro energético, mejora la eficiencia de procesos y contribuye a objetivos de sostenibilidad. Las empresas implementadoras logran ventajas competitivas y demuestran responsabilidad ambiental.",
+      "summary_length": 406,
+      "category": "ISO_42001_Inteligencia_Artificial",
+      "ai_generated": true,
+      "page_found": 2,
+      "extracted_at": "2025-10-04T11:32:39.846Z",
+      "processed_at": "2025-10-04T11:32:43.482Z",
+      "news_priority": 1,
+      "selected_date": "2025-10-04T22:12:25.990908",
+      "rotation_id": "2025-10-04-1",
+      "summary_type": "unique"
+    },
+    {
+      "id": 9,
+      "title": "Gestión de riesgos ISO 31000: metodología integral para la identificación y mitigación",
+      "url": "https://www.isotools.us/2025/08/20/gestion-de-riesgos-iso-31000-metodologia-integral-para-la-identificacion-y-mitigacion/",
+      "ai_summary": "ISO 31000 proporciona principios y directrices para la gestión integral de riesgos organizacionales, mejorando la toma de decisiones estratégicas. Su aplicación permite identificar, evaluar y mitigar riesgos de manera sistemática, protegiendo objetivos empresariales y creando valor sostenible. Las organizaciones desarrollan mayor resiliencia y capacidad de adaptación ante incertidumbres del mercado.",
+      "summary_length": 402,
+      "category": "ISO_31000_Gestion_Riesgos",
+      "ai_generated": true,
+      "page_found": 3,
+      "extracted_at": "2025-10-04T11:32:39.846Z",
+      "processed_at": "2025-10-04T11:32:43.994Z",
+      "news_priority": 2,
+      "selected_date": "2025-10-04T22:12:25.991019",
+      "rotation_id": "2025-10-04-2",
+      "summary_type": "unique"
+    },
+    {
+      "id": 4,
+      "title": "¿Cuáles son los beneficios de la ISO 9001 2026?",
+      "url": "https://www.isotools.us/2025/09/15/cuales-son-los-beneficios-de-la-iso-9001-2026/",
+      "ai_summary": "La norma ISO 9001 proporciona un sistema de gestión de calidad probado que mejora la satisfacción del cliente y la eficiencia operativa. Su implementación genera procesos más consistentes, reduce costos por fallos de calidad y fortalece la competitividad en el mercado. Las organizaciones certificadas experimentan mayor productividad y reconocimiento internacional por su compromiso con la excelencia.",
+      "summary_length": 402,
+      "category": "ISO_9001_Gestion_Calidad",
+      "ai_generated": true,
+      "page_found": 1,
+      "extracted_at": "2025-10-04T11:32:39.846Z",
+      "processed_at": "2025-10-04T11:32:41.411Z",
+      "news_priority": 3,
+      "selected_date": "2025-10-04T22:12:25.991589",
+      "rotation_id": "2025-10-04-3",
+      "summary_type": "unique"
+    }
   ],
   "generation_info": {
-    "selected_at": "2025-10-04T15:17:00.160Z",
-    "next_rotation": "2025-10-05T12:00:00.000Z",
-    "algorithm": "jq_time_based_selection",
+    "selected_at": "2025-10-04T22:12:25.991696",
+    "next_rotation": "2025-10-05T22:12:25.991696",
+    "algorithm": "python_unique_summary_priority",
     "total_available_articles": 31,
-    "rotation_guaranteed": true
+    "unique_summaries_available": 15,
+    "generic_summaries_count": 16,
+    "rotation_guaranteed": true,
+    "quality_metrics": {
+      "unique_ratio": "3/3",
+      "generic_ratio": "0/3"
+    }
   }
 }
